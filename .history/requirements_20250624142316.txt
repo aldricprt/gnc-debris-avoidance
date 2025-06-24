@@ -1,0 +1,4 @@
+# Liste des dépendances Python du projet
+numpy
+matplotlib
+scipy
