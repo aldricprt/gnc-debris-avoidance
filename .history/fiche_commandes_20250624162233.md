@@ -1,0 +1,43 @@
+# Fiche mémo : Commandes utiles pour le projet GNC Debris Avoidance
+
+## Git (gestion de versions)
+
+# Créer une nouvelle branche
+ git checkout -b nom-de-ta-branche
+
+# Ajouter tous les fichiers modifiés
+ git add .
+
+# Enregistrer un commit
+ git commit -m "Message clair sur la modification"
+
+# Envoyer la branche sur GitHub
+ git push origin nom-de-ta-branche
+
+# Mettre à jour ta branche avec la branche principale
+ git pull origin main
+
+# Supprimer une branche locale
+ git branch -d nom-de-ta-branche
+
+# Supprimer une branche distante
+ git push origin --delete nom-de-ta-branche
+
+## Tests et exécution
+
+# Lancer tous les tests unitaires
+ pytest tests/
+
+# Lancer le script principal
+ ./run.sh
+
+# Installer les dépendances Python
+ pip install -r requirements.txt
+
+# Mettre à jour pip
+ pip install --upgrade pip
+
+## Astuces
+- Ouvre une Pull Request sur GitHub pour chaque nouvelle fonctionnalité ou correction.
+- Vérifie que la CI (GitHub Actions) passe avant de fusionner.
+- Mets à jour la documentation si besoin.
