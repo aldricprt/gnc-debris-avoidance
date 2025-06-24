@@ -38,41 +38,37 @@ if __name__ == "__main__":
     plt.savefig('images/trajectory.png', dpi=300, bbox_inches='tight')
     plt.show()
     
-    # Vitesse réelle très faible (variation d'altitude ~10 km sur 600 s)
-    # v = delta_altitude / delta_temps ≈ 20 km / 600 s ≈ 0.033 km/s
-    realistic_velocity = (np.max(true_positions) - np.min(true_positions)) / duration
-
     # Définition des scénarios de paramètres
     scenarios = [
         {
             'name': 'Smooth (high R, low Q)',
             'color': 'b',
-            'params': dict(P=np.diag([10.0, 0.1]), R=100.0, Q=np.array([[0.01, 0], [0, 0.001]]), initial_pos=true_positions[0], initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([10.0, 0.1]), R=100.0, Q=np.array([[0.01, 0], [0, 0.001]]), initial_pos=true_positions[0], initial_vel=7.8)
         },
         {
             'name': 'Reactive (low R, high Q)',
             'color': 'm',
-            'params': dict(P=np.diag([10.0, 0.1]), R=1.0, Q=np.array([[1.0, 0], [0, 0.1]]), initial_pos=true_positions[0], initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([10.0, 0.1]), R=1.0, Q=np.array([[1.0, 0], [0, 0.1]]), initial_pos=true_positions[0], initial_vel=7.8)
         },
         {
             'name': 'Bad init (wrong pos, high P)',
             'color': 'c',
-            'params': dict(P=np.diag([1000.0, 10.0]), R=25.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=350.0, initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([1000.0, 10.0]), R=25.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=350.0, initial_vel=7.8)
         },
         {
             'name': 'Rigid model (very low Q)',
             'color': 'orange',
-            'params': dict(P=np.diag([10.0, 0.1]), R=25.0, Q=np.array([[0.0001, 0], [0, 0.0001]]), initial_pos=true_positions[0], initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([10.0, 0.1]), R=25.0, Q=np.array([[0.0001, 0], [0, 0.0001]]), initial_pos=true_positions[0], initial_vel=7.8)
         },
         {
             'name': 'Noisy sensor (very high R)',
             'color': 'k',
-            'params': dict(P=np.diag([10.0, 0.1]), R=400.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=true_positions[0], initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([10.0, 0.1]), R=400.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=true_positions[0], initial_vel=7.8)
         },
         {
             'name': 'Precise sensor (very low R)',
             'color': 'g',
-            'params': dict(P=np.diag([10.0, 0.1]), R=1.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=true_positions[0], initial_vel=realistic_velocity)
+            'params': dict(P=np.diag([10.0, 0.1]), R=1.0, Q=np.array([[0.1, 0], [0, 0.01]]), initial_pos=true_positions[0], initial_vel=7.8)
         }
     ]
 
