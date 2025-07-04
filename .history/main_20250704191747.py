@@ -25,7 +25,7 @@ if __name__ == "__main__":
         {'pos': [415], 'vel': [-0.005]},  # Débris descendant plus lentement
         {'pos': [395], 'vel': [0.005]},   # Débris montant plus lentement
     ]
-    detector = DebrisDetector(debris_states=debris_states, detection_radius=0.01)  # Rayon plus petit
+    detector = DebrisDetector(debris_states=debris_states, detection_radius=2.0)  # Rayon plus petit
     debris_events = []  # Pour logguer les alertes prédictives
 
     # Simulation

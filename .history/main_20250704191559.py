@@ -25,7 +25,7 @@ if __name__ == "__main__":
         {'pos': [415], 'vel': [-0.005]},  # Débris descendant plus lentement
         {'pos': [395], 'vel': [0.005]},   # Débris montant plus lentement
     ]
-    detector = DebrisDetector(debris_states=debris_states, detection_radius=0.01)  # Rayon plus petit
+    detector = DebrisDetector(debris_states=debris_states, detection_radius=2.0)  # Rayon plus petit
     debris_events = []  # Pour logguer les alertes prédictives
 
     # Simulation
@@ -51,10 +51,6 @@ if __name__ == "__main__":
     plt.plot(time_steps, true_positions, 'g-', linewidth=2, label='True trajectory')
     plt.plot(time_steps, noisy_measurements, 'r.', markersize=4, alpha=0.5, label='Noisy measurements')
     plt.plot(time_steps, estimated_positions, 'b-', label='Kalman estimation')
-    # Trajectoire des débris (avec vitesse)
-    for idx, debris in enumerate(debris_states):
-        debris_traj = [debris['pos'][0] + debris['vel'][0]*t for t in time_steps]
-        plt.plot(time_steps, debris_traj, '--', linewidth=1.5, label=f'Trajectoire débris #{idx}')
     # Affichage des alertes prédictives
     if debris_events:
         t_debris, alt_debris, idx_debris, dmin_debris, tmin_debris = zip(*debris_events)

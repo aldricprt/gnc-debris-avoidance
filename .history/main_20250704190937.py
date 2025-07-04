@@ -20,12 +20,13 @@ if __name__ == "__main__":
     realistic_velocity = (np.max(true_positions) - np.min(true_positions)) / duration
     tracker = SatelliteTracker(initial_pos=true_positions[0], initial_vel=realistic_velocity, dt=dt)
 
-    # --- Détection de débris prédictive (moins sévère) ---
+    # --- Détection de débris prédictive ---
+    # Exemple : 2 débris avec position et vitesse (en 1D)
     debris_states = [
-        {'pos': [415], 'vel': [-0.005]},  # Débris descendant plus lentement
-        {'pos': [395], 'vel': [0.005]},   # Débris montant plus lentement
+        {'pos': [410], 'vel': [-0.01]},  # Débris descendant
+        {'pos': [390], 'vel': [0.01]},   # Débris montant
     ]
-    detector = DebrisDetector(debris_states=debris_states, detection_radius=0.01)  # Rayon plus petit
+    detector = DebrisDetector(debris_states=debris_states, detection_radius=5.0)
     debris_events = []  # Pour logguer les alertes prédictives
 
     # Simulation
@@ -34,14 +35,16 @@ if __name__ == "__main__":
     distances_to_debris = [[] for _ in debris_states]
     for i, z in enumerate(noisy_measurements):
         est = tracker.update(z)
+        # Récupère la vitesse estimée (pour la prédiction)
         est_vel = tracker.kf.x[1]
         estimated_positions.append(est)
         estimated_velocities.append(est_vel)
+        # Calcul de la distance à chaque débris (pour suivi)
         for idx, debris in enumerate(debris_states):
             dist = abs(est - debris['pos'][0])
             distances_to_debris[idx].append(dist)
-        # Détection prédictive moins sévère (horizon plus court, rayon plus petit)
-        alerts = detector.detect_predictive([est], [est_vel], horizon=30, dt=1.0)
+        # Détection prédictive à chaque pas de temps
+        alerts = detector.detect_predictive([est], [est_vel], horizon=60, dt=1.0)
         for idx, dmin, tmin in alerts:
             debris_events.append((time_steps[i], est, idx, dmin, tmin))
             print(f"Alerte collision prédictive (débris #{idx}) à t={time_steps[i]:.0f}s : distance min={dmin:.2f} km dans {tmin:.1f}s")
@@ -51,10 +54,6 @@ if __name__ == "__main__":
     plt.plot(time_steps, true_positions, 'g-', linewidth=2, label='True trajectory')
     plt.plot(time_steps, noisy_measurements, 'r.', markersize=4, alpha=0.5, label='Noisy measurements')
     plt.plot(time_steps, estimated_positions, 'b-', label='Kalman estimation')
-    # Trajectoire des débris (avec vitesse)
-    for idx, debris in enumerate(debris_states):
-        debris_traj = [debris['pos'][0] + debris['vel'][0]*t for t in time_steps]
-        plt.plot(time_steps, debris_traj, '--', linewidth=1.5, label=f'Trajectoire débris #{idx}')
     # Affichage des alertes prédictives
     if debris_events:
         t_debris, alt_debris, idx_debris, dmin_debris, tmin_debris = zip(*debris_events)
