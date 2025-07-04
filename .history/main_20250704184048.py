@@ -47,34 +47,23 @@ if __name__ == "__main__":
     plt.plot(time_steps, true_positions, 'g-', linewidth=2, label='True trajectory')
     plt.plot(time_steps, noisy_measurements, 'r.', markersize=4, alpha=0.5, label='Noisy measurements')
     plt.plot(time_steps, estimated_positions, 'b-', label='Kalman estimation')
+    # Affichage des distances à chaque débris
+    for idx, dists in enumerate(distances_to_debris):
+        plt.plot(time_steps, dists, '--', label=f'Distance au débris #{idx}')
     # Affichage des premières détections de chaque débris
     if debris_events:
         t_debris, alt_debris, idx_debris = zip(*debris_events)
         plt.scatter(t_debris, alt_debris, c='black', marker='x', s=80, label='Nouveau débris détecté')
     plt.title("Kalman filtering + debris detection for a CubeSat in LEO", fontsize=14)
     plt.xlabel("Time (s)", fontsize=12)
-    plt.ylabel("Altitude (km)", fontsize=12)
+    plt.ylabel("Altitude (km) / Distance (km)", fontsize=12)
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig('experiments/debris-detection-experiments/figures/trajectory.png', dpi=300, bbox_inches='tight')
-    plt.show()
-
-    # Nouveau graphique : évolution des distances à chaque débris
-    plt.figure(figsize=(12, 5))
-    for idx, dists in enumerate(distances_to_debris):
-        plt.plot(time_steps, dists, label=f'Distance au débris #{idx}')
-    plt.axhline(detector.detection_radius, color='red', linestyle='--', label='Rayon de détection')
-    plt.title("Distance entre le satellite et chaque débris au cours du temps", fontsize=14)
-    plt.xlabel("Time (s)", fontsize=12)
-    plt.ylabel("Distance (km)", fontsize=12)
-    plt.legend(loc='upper right')
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig('experiments/debris-detection-experiments/figures/debris_distances.png', dpi=300, bbox_inches='tight')
+    plt.savefig('images/trajectory.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     # --- Log d'expérience ---
-    with open('experiments/debris-detection-experiments/debris_detection_log.md', 'a') as log:
+    with open('experiments/debris_detector_log.md', 'a') as log:
         log.write(f"\n\n## Résultat du {np.datetime64('now')}\n")
         log.write(f"Débris simulés aux positions : {debris_positions} (rayon {detector.detection_radius} km)\n")
         log.write(f"Nombre de nouveaux débris détectés : {len(debris_events)}\n")

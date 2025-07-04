@@ -28,19 +28,14 @@ if __name__ == "__main__":
 
     # Simulation
     estimated_positions = []
-    distances_to_debris = [[] for _ in debris_positions]  # Historique des distances à chaque débris
     for i, z in enumerate(noisy_measurements):
         est = tracker.update(z)
         estimated_positions.append(est)
-        # Calcul de la distance à chaque débris
-        for idx, debris in enumerate(debris_positions):
-            dist = abs(est - debris[0])
-            distances_to_debris[idx].append(dist)
         # Détection de nouveaux débris à chaque pas de temps
         new_detected = detector.detect([est])
         for idx in new_detected:
             debris_events.append((time_steps[i], est, idx))
-            print(f"Nouveau débris détecté (#{idx}) à t={time_steps[i]:.0f}s, altitude satellite={est:.1f} km, altitude débris={debris_positions[idx][0]:.1f} km, distance={abs(est-debris_positions[idx][0]):.2f} km")
+            print(f"Nouveau débris détecté (#{idx}) à t={time_steps[i]:.0f}s, altitude satellite={est:.1f} km, altitude débris={debris_positions[idx][0]:.1f} km")
 
     # Visualisation simple
     plt.figure(figsize=(12, 6))
@@ -56,25 +51,11 @@ if __name__ == "__main__":
     plt.ylabel("Altitude (km)", fontsize=12)
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig('experiments/debris-detection-experiments/figures/trajectory.png', dpi=300, bbox_inches='tight')
-    plt.show()
-
-    # Nouveau graphique : évolution des distances à chaque débris
-    plt.figure(figsize=(12, 5))
-    for idx, dists in enumerate(distances_to_debris):
-        plt.plot(time_steps, dists, label=f'Distance au débris #{idx}')
-    plt.axhline(detector.detection_radius, color='red', linestyle='--', label='Rayon de détection')
-    plt.title("Distance entre le satellite et chaque débris au cours du temps", fontsize=14)
-    plt.xlabel("Time (s)", fontsize=12)
-    plt.ylabel("Distance (km)", fontsize=12)
-    plt.legend(loc='upper right')
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig('experiments/debris-detection-experiments/figures/debris_distances.png', dpi=300, bbox_inches='tight')
+    plt.savefig('images/trajectory.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     # --- Log d'expérience ---
-    with open('experiments/debris-detection-experiments/debris_detection_log.md', 'a') as log:
+    with open('experiments/debris_detector_log.md', 'a') as log:
         log.write(f"\n\n## Résultat du {np.datetime64('now')}\n")
         log.write(f"Débris simulés aux positions : {debris_positions} (rayon {detector.detection_radius} km)\n")
         log.write(f"Nombre de nouveaux débris détectés : {len(debris_events)}\n")

@@ -56,7 +56,7 @@ if __name__ == "__main__":
     plt.ylabel("Altitude (km)", fontsize=12)
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig('experiments/debris-detection-experiments/figures/trajectory.png', dpi=300, bbox_inches='tight')
+    plt.savefig('images/trajectory.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     # Nouveau graphique : évolution des distances à chaque débris
@@ -70,11 +70,11 @@ if __name__ == "__main__":
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig('experiments/debris-detection-experiments/figures/debris_distances.png', dpi=300, bbox_inches='tight')
+    plt.savefig('images/debris_distances.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     # --- Log d'expérience ---
-    with open('experiments/debris-detection-experiments/debris_detection_log.md', 'a') as log:
+    with open('experiments/debris_detector_log.md', 'a') as log:
         log.write(f"\n\n## Résultat du {np.datetime64('now')}\n")
         log.write(f"Débris simulés aux positions : {debris_positions} (rayon {detector.detection_radius} km)\n")
         log.write(f"Nombre de nouveaux débris détectés : {len(debris_events)}\n")
