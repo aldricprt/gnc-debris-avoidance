@@ -16,8 +16,7 @@ def test_kalman_convergence():
 
 def test_kalman_convergence_from_far():
     tracker = SatelliteTracker(initial_pos=400.0, initial_vel=0.0, min_altitude=None)
-    # On augmente le nombre d'itérations pour laisser le temps au filtre de converger
-    for _ in range(100):
+    for _ in range(20):
         tracker.update(10)
     assert tracker.kf.x[0] == pytest.approx(10, abs=2.0)
 
