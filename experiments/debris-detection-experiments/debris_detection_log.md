@@ -73,3 +73,11 @@ Débris détectés au final (indices) : [0, 1]
 Débris simulés aux positions : [{'pos': [415], 'vel': [-0.005]}, {'pos': [395], 'vel': [0.005]}] (rayon 0 km)
 Nombre de nouvelles alertes de collision : 0
 Débris détectés au final (indices) : []
+
+
+## Résultat du 2025-07-05T15:11:35
+Débris simulés aux positions : [{'pos': [415], 'vel': [-0.005]}, {'pos': [395], 'vel': [0.005]}] (rayon 0.01 km)
+Nombre de nouvelles alertes de collision : 2
+- Alerte débris #0 à t=42s, altitude estimée=407.9 km, distance min=0.01 km dans 21.0s
+- Alerte débris #1 à t=195s, altitude estimée=405.7 km, distance min=0.00 km dans 28.0s
+Débris détectés au final (indices) : [0, 1]
