@@ -13,11 +13,11 @@ def test_predictive_detection():
     ]
     detector = DebrisDetector(debris_states, detection_radius=2.0)
     alerts = detector.detect_predictive(sat_pos, sat_vel, horizon=20, dt=0.5)
-    # On doit détecter le premier débris, pas le second
     detected_indices = [idx for idx, dmin, tmin in alerts]
+    print(f"Distances minimales calculées : {[detector._min_distance_over_horizon(sat_pos, sat_vel, d['pos'], d['vel'], 20, 0.5)[0] for d in debris_states]}")
+    print(f"Indices détectés : {detected_indices}")
     assert 0 in detected_indices
     assert 1 not in detected_indices
-    # Vérifie que la distance minimale est bien inférieure au seuil
     for idx, dmin, tmin in alerts:
         assert dmin < 2.0
         assert tmin > 0
