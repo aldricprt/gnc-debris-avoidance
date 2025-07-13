@@ -14,8 +14,8 @@ if __name__ == "__main__":
     realistic_velocity = (np.max(true_positions) - np.min(true_positions)) / duration
     tracker = SatelliteTracker(initial_pos=true_positions[0], initial_vel=realistic_velocity, dt=dt)
 
-    # Lecture des débris depuis un fichier de config dédié
-    with open('configs/debris_leo.json', 'r') as f:
+    # Lecture des débris depuis un fichier externe JSON
+    with open('debris_config.json', 'r') as f:
         debris_states = json.load(f)
     detection_radius = 1.0  # km (seuil typique pour l'alerte collision dans le spatial)
 
