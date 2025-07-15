@@ -246,3 +246,49 @@ Nombre de détections : 214
 - Débris détecté à t=582s, altitude estimée=393.9 km
 - Débris détecté à t=583s, altitude estimée=394.6 km
 - Débris détecté à t=589s, altitude estimée=394.3 km
+
+
+## Résultat du 2025-07-04T16:31:58
+Débris simulés aux positions : [[450], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 1
+- Nouveau débris #1 détecté à t=346s, altitude estimée=394.8 km
+Débris détectés au final (indices) : [1]
+
+
+## Résultat du 2025-07-04T16:32:21
+Débris simulés aux positions : [[450], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 1
+- Nouveau débris #1 détecté à t=360s, altitude estimée=394.6 km
+Débris détectés au final (indices) : [1]
+
+
+## Résultat du 2025-07-04T16:37:09
+Débris simulés aux positions : [[410], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 2
+- Nouveau débris #0 détecté à t=15s, altitude estimée=405.5 km
+- Nouveau débris #1 détecté à t=348s, altitude estimée=394.7 km
+Débris détectés au final (indices) : [0, 1]
+
+
+## Résultat du 2025-07-04T16:39:46
+Débris simulés aux positions : [[410], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 2
+- Nouveau débris #0 détecté à t=28s, altitude estimée=406.2 km
+- Nouveau débris #1 détecté à t=326s, altitude estimée=395.0 km
+Débris détectés au final (indices) : [0, 1]
+
+
+## Résultat du 2025-07-04T16:41:32
+Débris simulés aux positions : [[410], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 2
+- Nouveau débris #0 détecté à t=30s, altitude estimée=405.1 km
+- Nouveau débris #1 détecté à t=339s, altitude estimée=393.9 km
+Débris détectés au final (indices) : [0, 1]
+
+
+## Résultat du 2025-07-04T16:43:43
+Débris simulés aux positions : [[410], [390]] (rayon 5.0 km)
+Nombre de nouveaux débris détectés : 2
+- Nouveau débris #0 détecté à t=37s, altitude estimée=405.1 km
+- Nouveau débris #1 détecté à t=369s, altitude estimée=394.4 km
+Débris détectés au final (indices) : [0, 1]

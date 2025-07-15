@@ -1,7 +1,6 @@
 from src.gnc.kalman_filter import SatelliteTracker
 import matplotlib.pyplot as plt
 import numpy as np
-import json
 
 if __name__ == "__main__":
     # Paramètres simulation
@@ -14,9 +13,11 @@ if __name__ == "__main__":
     realistic_velocity = (np.max(true_positions) - np.min(true_positions)) / duration
     tracker = SatelliteTracker(initial_pos=true_positions[0], initial_vel=realistic_velocity, dt=dt)
 
-    # Lecture des débris depuis un fichier de config dédié
-    with open('configs/debris_leo.json', 'r') as f:
-        debris_states = json.load(f)
+    # Débris : position et vitesse
+    debris_states = [
+        {'pos': [415], 'vel': [-0.005]},
+        {'pos': [395], 'vel': [0.005]},
+    ]
     detection_radius = 1.0  # km (seuil typique pour l'alerte collision dans le spatial)
 
     # Simulation Kalman

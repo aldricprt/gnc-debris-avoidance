@@ -1,7 +1,6 @@
 from src.gnc.kalman_filter import SatelliteTracker
 import matplotlib.pyplot as plt
 import numpy as np
-import json
 
 if __name__ == "__main__":
     # Paramètres simulation
@@ -14,10 +13,12 @@ if __name__ == "__main__":
     realistic_velocity = (np.max(true_positions) - np.min(true_positions)) / duration
     tracker = SatelliteTracker(initial_pos=true_positions[0], initial_vel=realistic_velocity, dt=dt)
 
-    # Lecture des débris depuis un fichier de config dédié
-    with open('configs/debris_leo.json', 'r') as f:
-        debris_states = json.load(f)
-    detection_radius = 1.0  # km (seuil typique pour l'alerte collision dans le spatial)
+    # Débris : position et vitesse
+    debris_states = [
+        {'pos': [415], 'vel': [-0.005]},
+        {'pos': [395], 'vel': [0.005]},
+    ]
+    detection_radius = 0.01  # km
 
     # Simulation Kalman
     estimated_positions = []
@@ -46,36 +47,7 @@ if __name__ == "__main__":
         else:
             print(f"Pas de collision réelle avec débris #{idx}. Distance minimale atteinte : {min_dist:.3f} km à t={t_collision:.0f}s.")
 
-    # Figure 1 : Trajectoire réelle, mesures bruitées, estimation Kalman (sans débris)
-    plt.figure(figsize=(12, 6))
-    plt.plot(time_steps, true_positions, 'g-', linewidth=2, label='True trajectory')
-    plt.plot(time_steps, noisy_measurements, 'r.', markersize=4, alpha=0.5, label='Noisy measurements')
-    plt.plot(time_steps, estimated_positions, 'b-', label='Kalman estimation')
-    plt.title("Satellite trajectory: true, noisy, Kalman", fontsize=14)
-    plt.xlabel("Time (s)", fontsize=12)
-    plt.ylabel("Altitude (km)", fontsize=12)
-    plt.legend(loc='upper right')
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig('experiments/debris-detection-experiments/figures/trajectory.png', dpi=300, bbox_inches='tight')
-    plt.close()
-
-    # Figure 2 : Evolution des distances à chaque débris
-    plt.figure(figsize=(12, 5))
-    for idx, debris in enumerate(debris_states):
-        debris_traj = [debris['pos'][0] + debris['vel'][0]*t for t in time_steps]
-        distances = [abs(sat - deb) for sat, deb in zip(estimated_positions, debris_traj)]
-        plt.plot(time_steps, distances, label=f'Distance au débris #{idx}')
-    plt.axhline(detection_radius, color='red', linestyle='--', label='Rayon de détection')
-    plt.title("Distance entre le satellite et chaque débris au cours du temps", fontsize=14)
-    plt.xlabel("Time (s)", fontsize=12)
-    plt.ylabel("Distance (km)", fontsize=12)
-    plt.legend(loc='upper right')
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.savefig('experiments/debris-detection-experiments/figures/debris_distances.png', dpi=300, bbox_inches='tight')
-    plt.close()
-
-    # Figure 3 : Détection de collision réelle (balayage trajectoire Kalman)
+    # Visualisation
     plt.figure(figsize=(12, 6))
     plt.plot(time_steps, true_positions, 'g-', linewidth=2, label='True trajectory')
     plt.plot(time_steps, noisy_measurements, 'r.', markersize=4, alpha=0.5, label='Noisy measurements')
@@ -92,7 +64,7 @@ if __name__ == "__main__":
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.savefig('experiments/debris-detection-experiments/figures/trajectory_collision_reelle.png', dpi=300, bbox_inches='tight')
-    plt.close()
+    plt.show()
 
     # Log lisible
     print("\nRésumé des collisions :")
